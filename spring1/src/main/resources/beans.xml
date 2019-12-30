@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    <bean id="p" class="cn.java62.spring1.Person">
+        <property name="person" value="老孔"/>
+        <property name="words" value="大家早自习噪点来"/>
+    </bean>
+    <bean id="p2" class="cn.java62.spring1.Person">
+        <property name="person" value="老刘"/>
+        <property name="words" value="大家早自习早点来"/>
+    </bean>
+    <bean id="whiteandblack" class="cn.java62.spring1.printer.WhiteAndBlackInk"/>
+    <bean id="colorInk" class="cn.java62.spring1.printer.ColorInk"/>
+    <bean id="a4" class="cn.java62.spring1.printer.TextPaper">
+        <property name="linewords" value="8"/>
+        <property name="pageLines" value="10"/>
+    </bean>
+    <bean id="b5" class="cn.java62.spring1.printer.TextPaper">
+        <property name="linewords" value="6"/>
+        <property name="pageLines" value="5"/>
+    </bean>
+    <bean id="printer" class="cn.java62.spring1.printer.Printer">
+        <property name="name" value="惠普Z90炫彩系列"/>
+        <property name="price" value="1499"/>
+        <property name="ink" ref="colorInk"/>
+        <property name="paper" ref="b5"/>
+    </bean>
+</beans>
