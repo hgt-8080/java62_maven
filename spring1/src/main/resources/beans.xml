@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
     <bean id="p" class="cn.java62.spring1.Person">
+        <constructor-arg  index="1" value="大家早自习噪点来"/>
+        <constructor-arg index="0" value="老孔"/>
+    </bean>
+   <!-- <bean id="p2" class="cn.java62.spring1.Person">
+        <property name="person" value="老刘"/>
+        <property name="words" value="大家早自习早点来"/>
+    </bean>-->
+    <!--<bean id="p" class="cn.java62.spring1.Person">
         <property name="person" value="老孔"/>
         <property name="words" value="大家早自习噪点来"/>
     </bean>
     <bean id="p2" class="cn.java62.spring1.Person">
         <property name="person" value="老刘"/>
         <property name="words" value="大家早自习早点来"/>
-    </bean>
+    </bean>-->
     <bean id="whiteandblack" class="cn.java62.spring1.printer.WhiteAndBlackInk"/>
     <bean id="colorInk" class="cn.java62.spring1.printer.ColorInk"/>
     <bean id="a4" class="cn.java62.spring1.printer.TextPaper">
@@ -22,12 +31,72 @@
     </bean>
     <bean id="b5" class="cn.java62.spring1.printer.TextPaper">
         <property name="linewords" value="6"/>
-        <property name="pageLines" value="5"/>
+        <property name="pageLines">
+            <value>8</value>
+        </property>
     </bean>
-    <bean id="printer" class="cn.java62.spring1.printer.Printer">
-        <property name="name" value="惠普Z90炫彩系列"/>
-        <property name="price" value="1499"/>
-        <property name="ink" ref="colorInk"/>
-        <property name="paper" ref="b5"/>
+    <!--<bean id="printer" class="cn.java62.spring1.printer.Printer" p:paper-ref="a4" p:ink-ref="colorInk" p:name="佳能打印机F1000系列" p:price="2999">
+       &lt;!&ndash; <property name="name" value="惠普Z90炫彩系列"/>
+        <property name="price" value="1499"/>&ndash;&gt;
+        &lt;!&ndash;<property name="ink" ref="colorInk"/>
+        <property name="paper" ref="b5"/>&ndash;&gt;
+    </bean>-->
+    <bean id="printer" class="cn.java62.spring1.printer.Printer"   p:ink-ref="colorInk" p:name="佳能打印机F1000系列" p:price="2999">
+        <!-- <property name="name" value="惠普Z90炫彩系列"/>
+         <property name="price" value="1499"/>-->
+        <!--<property name="ink" ref="colorInk"/>
+        <property name="paper" ref="b5"/>-->
+        <property name="paper">
+            <bean class="cn.java62.spring1.printer.TextPaper">
+                <property name="linewords" value="18"/>
+                <property name="pageLines" value="20"/>
+            </bean>
+        </property>
+    </bean>
+    <bean id="g" class="cn.java62.spring1.Gardon">
+        <property name="flowers">
+            <list>
+                <value>玫瑰</value>
+                <value>百合</value>
+                <value>芍药</value>
+                <value>菊花</value>
+                <value>向日葵</value>
+            </list>
+        </property>
+        <property name="emps">
+            <map>
+                <entry  key="门卫" value="老张"/>
+                <entry  key="司机" value="老李"/>
+                <entry  key="负责人" value="老马"/>
+                <entry  key="园丁" value="老王"/>
+                <entry  key="dayinji" value-ref="printer"/>
+            </map>
+        </property>
+        <property name="intro">
+            <props>
+                <prop key="2019" > 五一劳动奖章获得人</prop>
+                <prop key="2018" >纳税大户</prop>
+
+            </props>
+        </property>
+    </bean>
+    <bean id="g2" class="cn.java62.spring1.Gardon">
+        <property name="flowers" value="玫瑰"></property>
+        <property name="emps">
+            <map>
+                <entry  key="门卫" value="老张"/>
+                <entry  key="司机" value="老李"/>
+                <entry  key="负责人" value="老马"/>
+                <entry  key="园丁" value="老王"/>
+                <entry  key="dayinji" value-ref="printer"/>
+            </map>
+        </property>
+        <property name="intro">
+            <props>
+                <prop key="2019" > 五一劳动奖章获得人</prop>
+                <prop key="2018" >纳税大户</prop>
+
+            </props>
+        </property>
     </bean>
 </beans>
