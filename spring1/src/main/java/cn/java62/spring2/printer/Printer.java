@@ -31,6 +31,7 @@ public class Printer {
         System.out.println("用"+ink.getColor()+"打印：");
         paper.print(str);
     }
+/*
 
     public void setName(String name) {
         this.name = name;
@@ -47,4 +48,5 @@ public class Printer {
     public void setPaper(Paper paper) {
         this.paper = paper;
     }
+*/
 }
