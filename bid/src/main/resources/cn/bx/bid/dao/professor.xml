@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bx.bid.dao.ProfessorDao">
+    <resultMap id="Professor" type="Professor">
+        <id property="id" column="id"/>
+        <collection property="workhistory" column="id" select="getHistory"></collection>
+    </resultMap>
+    <select id="getHistory" resultType="WorkHistory">
+        select * from workhistory where professorid=#{0}
+    </select>
+
+    <select id="get" resultMap="Professor">
+        select * from professor p where p.id=#{0}
+
+    </select>
+    <select id="search" resultType="Professor">
+		<bind name="start" value="(pageNo-1)*pageSize"/>
+		 select p.id,p.professorname,p.birthday,p.identitynumber,p.institution,p.education
+		 , p.mobliephone
+		  from professor p
+		  <include refid="sqlWhere"></include>
+		 order by p.id desc
+        limit #{start},#{pageSize}
+	 </select>
+    <sql id="sqlWhere">
+        <where>
+            <if test="name!=null and name!=''">
+                and p.professorname like concat('%',#{name},'%')
+            </if>
+            <if test="tele!=null and tele!=''">
+                and p.mobliephone like concat('%',#{tele},'%')
+            </if>
+            <if test="idcard!=null and idcard!=''">
+                and p.identitynumber like concat('%',#{idcard},'%')
+            </if>
+        </where>
+    </sql>
+    <select id="searchTotal" resultType="int">
+        select count(p.id) from  professor p
+        <include refid="sqlWhere"></include>
+    </select>
+
+    <select id="findpros" resultType="Project">
+
+	  select t.* from randomname r LEFT JOIN project t ON(r.projectId=t.id) where r.professorId=#{0}
+
+    </select>
+
+    <insert id="addHistory" parameterType="WorkHistory" >
+        insert into workhistory(startdate,enddate,job,jobduty,employcompany,professorid)
+        values(#{startdate},#{enddate},#{job},#{jobduty},#{employcompany},#{professorid})
+    </insert>
+    <delete id="delHis">
+        delete from workhistory where id=#{hisid} and professorid=#{pid}
+    </delete>
+</mapper>
