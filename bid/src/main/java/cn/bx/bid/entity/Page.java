@@ -42,6 +42,22 @@ public class Page<T> {
 		this.data = data;
 	}
 
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
 	public int getCode() {
 		return code;
 	}

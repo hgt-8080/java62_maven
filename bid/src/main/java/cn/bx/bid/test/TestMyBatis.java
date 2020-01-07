@@ -4,11 +4,13 @@ import cn.bx.bid.dao.UserDao;
 import cn.bx.bid.service.ProjectService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import java.util.Arrays;
 
 public class TestMyBatis {
     public static void main(String[] args) {
+        //DispatcherServletd
         ApplicationContext ac=new ClassPathXmlApplicationContext("spring-config.xml");
 //        UserBiz userBiz=ac.getBean(UserBiz.class);
 //        System.out.println(userBiz.login("admin","123456"));
@@ -18,7 +20,9 @@ public class TestMyBatis {
 //        Class []cr=userdao.getClass().getInterfaces();
 //        System.out.println(Arrays.toString(cr));
         ProjectService projectService=ac.getBean(ProjectService.class);
-        projectService.profnotPresentProject(2L,365,"被狗咬了");
+      //  projectService.profnotPresentProject(2L,365,"被狗咬了");
 
+        ProjectService projectService2=ac.getBean(ProjectService.class);
+        System.out.println(projectService==projectService2);
     }
 }

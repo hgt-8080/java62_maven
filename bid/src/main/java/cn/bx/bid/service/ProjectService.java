@@ -8,6 +8,7 @@ import cn.bx.bid.util.Client;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +19,13 @@ import java.util.List;
 //M V C
 @Service
 @Transactional(readOnly = true)
+@Scope("prototype")
 public class ProjectService {
     public static final int PAGE_SIZE = Page.PAGE_SIZE;
 
+    public ProjectService(){
+        System.out.println("project servierce创建成功");
+    }
     @Resource
     private ProjectDao projectDao;
 
@@ -115,7 +120,7 @@ public class ProjectService {
      * @param projectid 项目号
      * @return
      */
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int profRoleProject(long profid, long projectid) {
 
 //        SqlSession s = MyBatisUtil.get();
