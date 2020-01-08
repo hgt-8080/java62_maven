@@ -59,7 +59,7 @@ public class UserService {
 
         List<User> list = userDao.search(pageNo, limit, name, start, end);
         int total = userDao.searchTotal(name, start, end);
-        Page<User> p = new Page<User>(total, limit, list);
+        Page<User> p = new Page<User>(total, limit, list,pageNo);
         return p;
 
 

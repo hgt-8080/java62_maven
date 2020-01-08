@@ -6,6 +6,7 @@ import cn.bx.bid.service.UserService;
 import cn.bx.bid.util.StringUtil;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.ContextLoaderListener;
@@ -40,19 +41,39 @@ public class UserController {
         return "regsuccess";
     }
     @GetMapping("/userSearch")
-    public ModelAndView search(@RequestParam(name = "page", defaultValue = "1") int pageNo, @RequestParam(name = "limit", defaultValue = "10") int limit, @RequestParam(name = "name", required = false) String name, @RequestParam(name = "startDate", required = false)Date start, @RequestParam(name = "endDate", required = false) Date end) {
+    public ModelAndView search(@RequestParam(name = "page", defaultValue = "1") int pageNo, @RequestParam(name = "limit", defaultValue = "10") int limit, @RequestParam(name = "name", required = false) String name, @RequestParam(name = "start", required = false)Date start, @RequestParam(name = "end", required = false) Date end) {
 
         Page<User> page = userService.paging(pageNo, limit, name, start, end);
         ModelAndView mv=new ModelAndView();
-        mv.setViewName("userlist");
+        mv.setViewName("admin-list");
         mv.addObject("p",page);
+
+        mv.addObject("name", name);
+        mv.addObject("start", start);
+        mv.addObject("end", end);
+
         return mv;
     }
+    //model也可以带数据到视图
+    @GetMapping("user-update-{id}")
+    public String update(@PathVariable("id") long id, Model m){
+        User user=this.userService.get(id);
+        m.addAttribute("user",user);
+        return "userupdate";
+    }
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
         // true:允许输入空值，false:不能为空值 }
+    }
+
+    //局部，只能处理UserController中的异常
+    @ExceptionHandler
+    public String handlerException(Exception e){
+        e.printStackTrace();//Log4j
+        return "error";
     }
 }

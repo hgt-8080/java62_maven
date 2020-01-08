@@ -20,9 +20,48 @@
 ">
 
     <context:component-scan base-package="cn.bx.bid.ctrl"/>
-    <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="false">
+            <!--配置spring的转换器 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+
+            <bean
+                    class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/>
+
+            <bean
+                    class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+
+            <bean
+                    class="org.springframework.http.converter.BufferedImageHttpMessageConverter"/>
+
+            <!--配置fastjson中实现HttpMessageConverter接口的转换器 -->
+            <bean id="fastJsonHttpMessageConverter"
+                  class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <!--加入支持的媒体类型，返回contentType -->
+                <property name="supportedMediaTypes">
+                    <list>
+                        <!--这里顺序不能反，一定要先写text/html，不然IE下会出现下载提示 -->
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="40000000"/>
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
+    <mvc:interceptors>
+
+        <mvc:interceptor >
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/login*.*"/>
+            <bean id="roleInterceptor" class="cn.bx.bid.ctrl.RoleInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

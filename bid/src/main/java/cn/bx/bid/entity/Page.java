@@ -18,7 +18,13 @@ public class Page<T> {
 		this.count = count;
 		this.data = data;
 	}
+	public Page( int count, int limit, List<T> data,int page) {
 
+		this.count = count;
+		this.limit = limit;
+		this.data = data;
+		this.page=page;
+	}
 	public Page(int code, int count, int limit, List<T> data) {
 		super();
 		this.code = code;
@@ -90,4 +96,8 @@ public class Page<T> {
 		this.data = data;
 	}
 
+	//计算总页数
+	public int getTotalpage(){
+		return this.count/this.limit+(this.count%this.limit==0?0:1);
+	}
 }

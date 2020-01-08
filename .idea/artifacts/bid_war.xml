@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="bid:war">
+    <output-path>$PROJECT_DIR$/bid/target</output-path>
+    <root id="archive" name="bid.war">
+      <element id="artifact" artifact-name="bid:war exploded" />
+    </root>
+  </artifact>
+</component>

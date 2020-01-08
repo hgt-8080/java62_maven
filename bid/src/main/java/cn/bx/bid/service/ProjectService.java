@@ -19,7 +19,7 @@ import java.util.List;
 //M V C
 @Service
 @Transactional(readOnly = true)
-@Scope("prototype")
+//@Scope("prototype")
 public class ProjectService {
     public static final int PAGE_SIZE = Page.PAGE_SIZE;
 
@@ -36,7 +36,7 @@ public class ProjectService {
            // ProjectDao userDao = s.getMapper(ProjectDao.class);
             List<Project> list = projectDao.search(pageNo, limit, name, category);
             int total = projectDao.searchTotal(name, category);
-            Page<Project> p = new Page<>(total, limit, list);
+            Page<Project> p = new Page<>(total, limit, list,pageNo);
             return p;
 //        } finally {
 //            MyBatisUtil.close(s);
